@@ -3,17 +3,23 @@
 include('classes/SimpleElement.php');
 include('classes/CompositeElement.php');
 
-    $element = new SimpleElement('simple item1','nav-link');
-    $element3 = new SimpleElement('simple item1','nav-link');
-    $element4 = new SimpleElement('simple item1','nav-link');
+    $element1 = new SimpleElement('simple item1','nav-link');
+    $element2 = new SimpleElement('simple item2','nav-link');
+    $element3 = new SimpleElement('simple item3','nav-link');
+    $element4 = new SimpleElement('simple item4','nav-link');
 
-    $element2 = new CompositeElement('complex menu','nav-link','dropright','complexMenu');
-    $element8 = new CompositeElement('complex menu','nav-link','dropright','complexMenu');
-    $element8->addElement($element);
-    $element2->addElement($element8);
+    $compositeElement1 = new CompositeElement('complex menu 1 ','nav-link','dropright','complexMenu1');
+    $compositeElement2 = new CompositeElement('complex menu 2 ','nav-link','dropright','complexMenu2');
 
-    $element2->addElement($element4);
-    $element2->addElement($element3);
+    $compositeElement1->addElement($element1);
+    $compositeElement1->addElement($element2);
+    $compositeElement2->addElement($element3);
+    $compositeElement2->addElement($element4);
+
+    $compositeElement1->addElement($compositeElement2);
+
+
+
 
 
 ?>
@@ -34,14 +40,20 @@ include('classes/CompositeElement.php');
 <body>
 <nav>
     <ul class="nav nav-tabs">
-        <li class="nav-item">
-            <?php echo $element->render()?>
+        <li class="nav-item ">
+            <?php  echo $element1->render();?>
         </li>
         <li class="nav-item ">
             <?php  echo $element2->render();?>
         </li>
+        <li class="nav-item ">
+            <?php  echo $element2->render();?>
+        </li>
+        <li class="nav-item ">
+            <?php  echo $compositeElement1->render();?>
+        </li>
 
-    </ul>
+   </ul>
 </nav>
 
 </body>
