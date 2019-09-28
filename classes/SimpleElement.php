@@ -11,17 +11,6 @@ class SimpleElement extends component
         parent::__construct($text, $class);
         $this->parent = $parent;
     }
-    public function addElement(component $c)
-    {
-        foreach($this->elementList as $element){
-            if( $element instanceOf CompositeElement && $element['parent_id'] == $this->parent){
-                $element->addElement($this);
-            }else{
-                $this->addElement($this);
-            }
-        }
-    }
-
 
     public function Remove(component $c)
     {

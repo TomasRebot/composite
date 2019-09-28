@@ -20,9 +20,11 @@ class Menu extends component
         foreach(self::$structure['complexes'] as $complex){
             $this->addElement(new CompositeElement($complex['text'], $complex['class'], $complex['target']));
         }
-        foreach(self::$structure['simples'] as $index =>  $simple){
-            $simpleElement = new SimpleElement($simple['text'], $simple['class'],  $simple['parent']);
-            $simpleElement->addElement($this);
+        foreach(self::$structure['simples'] as $simple){
+            $simpleElement = new SimpleElement($simple['text'], $simple['class']);
+            foreach($this->elementList as $listItem) {
+                $listItem->addElement($simpleElement);
+            }
         }
 
     }

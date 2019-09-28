@@ -32,16 +32,19 @@ return [
             'text' => 'complex item 1',
             'class' => 'fa-check',
             'target' => 'com1',
+            'parent_id'=> 1
         ],
         [
             'text' => 'complex item 2',
             'class' => 'fa-check-square-o',
             'target' => 'com2',
+            'parent_id'=> 2
         ],
         [
             'text' => 'complex item 3',
             'class' => 'fa-cloud-download',
             'target' => 'com3',
+            'parent_id'=> 3
         ],
     ],
 ];
