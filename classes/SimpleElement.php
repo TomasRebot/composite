@@ -5,20 +5,23 @@ include('component.php');
 class SimpleElement extends component
 {
 
-    public $element;
-
-
-    public function __construct($text, $class)
+    private $parent;
+    public function __construct($text,$class, $parent = 0)
     {
         parent::__construct($text, $class);
-        $this->addElement($this);
-
+        $this->parent = $parent;
     }
-
     public function addElement(component $c)
     {
-        $this->element = '<a class="'.$c->class.'" href="#">'.$c->text.'</a>';
+        foreach($this->elementList as $element){
+            if( $element instanceOf CompositeElement && $element['parent_id'] == $this->parent){
+                $element->addElement($this);
+            }else{
+                $this->addElement($this);
+            }
+        }
     }
+
 
     public function Remove(component $c)
     {
@@ -26,7 +29,13 @@ class SimpleElement extends component
     }
 
     public function render(){
-        return $this->element;
+        $element =
+            '<li>
+                <a href="#">
+                    <i class="fa '.$this->class.' fa-lg"></i>'.$this->text.'
+                </a>
+            </li>';
+        return $element;
     }
 
 }

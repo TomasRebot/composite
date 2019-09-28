@@ -3,18 +3,13 @@ declare(strict_types=1);
 
 class CompositeElement extends component
 {
-    public $element;
-    public $elementList = [];
-    public function __construct($text, $class, $wrapperClass , $target  )
+
+    public function __construct($text, $class, $target  )
     {
-        parent::__construct($text, $class, $wrapperClass, $target);
+        parent::__construct($text, $class, $target);
     }
 
-    public function addElement(component $c)
-    {
-        $this->elementList[]  = $c;
 
-    }
 
     public function Remove(component $c)
     {
@@ -23,17 +18,16 @@ class CompositeElement extends component
 
     public function render()
     {
-        $this->element .=   '<a class="nav-link dropdown-toggle '.$this->class.'" id="'.$this->target.'" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'.$this->text.'</a>';
-        $this->element .= '<div class="dropdown-menu '.$this->wrapperClass.'"  aria-labelledby="'.$this->target.'">';
-        foreach($this->elementList as $element){
-            $this->element .=  $element->render();
+       $element =
+       '<li data-toggle="collapse" data-target="#'.$this->target.'" class="collapsed">
+            <a href="#"><i class="fa '.$this->class.' fa-lg"></i> '.$this->text.' <span class="arrow"></span></a>
+        </li>
+        <ul class="sub-menu collapse" id="'.$this->target.'">';
+        foreach($this->elementList as $simpleElement){
+            $element .= $simpleElement->render();
         }
-        $this->element .='</div>';
-        return  $this->element;
-
-
-
-
+        $element .='</ul>';
+        return $element;
 
     }
 

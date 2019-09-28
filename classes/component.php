@@ -8,16 +8,21 @@ abstract class component
     public $text;
     public $class;
     public $wrapperClass;
+    public $elementList = [];
 
-    public function __construct($text, $class, $wrapperClass = null , $target = null )
+    public function __construct($text, $class, $target = null )
     {
         $this->target = $target;
         $this->text = $text;
         $this->class = $class;
-        $this->wrapperClass = $wrapperClass;
+
     }
 
-    public abstract function addElement(Component $c);
+    public function addElement(component $c)
+    {
+        $this->elementList[]  = $c;
+
+    }
     public abstract function remove(Component $c);
     public abstract function render();
 }
