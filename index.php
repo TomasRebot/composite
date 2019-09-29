@@ -3,10 +3,7 @@
 include('classes/SimpleElement.php');
 include('classes/CompositeElement.php');
 include('classes/Menu.php');
-
     $menu = new Menu('Composite menu', 'nav-side-menu');
-
-
 ?>
 
 <!doctype html>
@@ -26,7 +23,6 @@ include('classes/Menu.php');
 </head>
 <body>
 <nav>
-    <?= $menu->load()?>
     <?= $menu->render()?>
 </nav>
 

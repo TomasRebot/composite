@@ -5,11 +5,13 @@ include('component.php');
 class SimpleElement extends component
 {
 
-    private $parent;
-    public function __construct($text,$class, $parent = 0)
+    public $parentId;
+
+    public function __construct($text,$class, $id, $parentId)
     {
-        parent::__construct($text, $class);
-        $this->parent = $parent;
+        parent::__construct($text, $class, $id);
+
+        $this->parentId = $parentId;
     }
 
     public function Remove(component $c)

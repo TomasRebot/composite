@@ -4,11 +4,11 @@ declare(strict_types=1);
 class Menu extends component
 {
 
-    protected static $structure;
     public function __construct($text, $class, $target = null)
     {
         parent::__construct($text, $class, $target);
-        self::$structure = include('dataStructures/dataStructure.php');
+
+        self::load(include('dataStructures/dataStructure.php'));
     }
 
     public function remove(component $c)
@@ -16,21 +16,38 @@ class Menu extends component
         // TODO: Implement remove() method.
     }
 
-    public function load(){
-        foreach(self::$structure['complexes'] as $complex){
-            $this->addElement(new CompositeElement($complex['text'], $complex['class'], $complex['target']));
-        }
-        foreach(self::$structure['simples'] as $simple){
-            $simpleElement = new SimpleElement($simple['text'], $simple['class']);
-            foreach($this->elementList as $listItem) {
-                $listItem->addElement($simpleElement);
+    public function load( array $structure)
+    {
+        foreach ($structure['menuItems'] as $proto) {
+            if(isset($proto['target'])){
+                $instance = new CompositeElement(
+                    $proto['text'],
+                    $proto['class'],
+                    $proto['id'],
+                    $proto['target'],
+                    $proto['parentId']
+                );
+            }else{
+                $instance = new SimpleElement($proto['text'], $proto['class'], $proto['id'], $proto['parentId']);
+            }
+            //dont have parent
+            if (!intval($instance->parentId)) {
+                $this->addElement($instance);
+            }
+
+            //have parent
+            else {
+               $objectFounded =  $this->findParent($instance->parentId);
+               if($objectFounded != null){
+                   $objectFounded->addElement($instance);
+               }
             }
         }
-
+        return $this;
     }
-
     public function render()
     {
+
         $element = '<div class="nav-side-menu">
         <div class="brand">Composite Menu</div>
         <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
@@ -39,8 +56,6 @@ class Menu extends component
             foreach($this->elementList as $elementListItem){
                 $element .= $elementListItem->render();
             }
-
-
           $element .= ' </ul>
         </div>
         </div>';
